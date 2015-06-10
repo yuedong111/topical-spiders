@@ -15,7 +15,7 @@ BACKEND = 'crawlfrontier.contrib.backends.hbase.HBaseBackend'
 HBASE_DROP_ALL_TABLES = False
 HBASE_THRIFT_PORT = 9090
 HBASE_THRIFT_HOST = [{thrift_servers_list}]
-HBASE_QUEUE_PARTITIONS = 12
+HBASE_QUEUE_PARTITIONS = {partitions_count}
 HBASE_METADATA_TABLE = 'metadata'
 
 MIDDLEWARES.extend([
