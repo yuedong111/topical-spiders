@@ -9,10 +9,10 @@
 #
 from scrapy.settings.default_settings import SPIDER_MIDDLEWARES, DOWNLOADER_MIDDLEWARES
 
-BOT_NAME = 'topic'
+BOT_NAME = 'topical-spiders'
 
-SPIDER_MODULES = ['topic.spiders']
-NEWSPIDER_MODULE = 'topic.spiders'
+SPIDER_MODULES = ['topical-spiders.spiders']
+NEWSPIDER_MODULE = 'topical-spiders.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'topic (+http://www.yourdomain.com)'
@@ -55,8 +55,8 @@ DOWNLOAD_DELAY = 0.0
 
 # logging
 LOGSTATS_INTERVAL = 10
-EXTENSIONS = {
-    'scrapy_jsonrpc.webservice.WebService': 500
-    }
-JSONRPC_ENABLED = True
-JSONRPC_LOGFILE = 'jsonrpc.log'
+#EXTENSIONS = {
+#    'scrapy_jsonrpc.webservice.WebService': 500
+#    }
+#JSONRPC_ENABLED = True
+#JSONRPC_LOGFILE = 'jsonrpc.log'
