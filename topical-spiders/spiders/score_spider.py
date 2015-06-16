@@ -21,15 +21,6 @@ class ScoreSpider(Spider):
         super(ScoreSpider, self).set_crawler(crawler)
         self.crawler.signals.connect(self.spider_idle, signal=signals.spider_idle)
 
-    # master latest changes
-    @classmethod
-    def from_crawler(cls, crawler, *args, **kwargs):
-        spider = cls(*args, **kwargs)
-        spider._set_crawler(crawler)
-        spider.crawler.signals.connect(spider.spider_idle, signal=signals.spider_idle)
-        return spider
-
-
     def spider_idle(self):
         self.log("Spider idle signal caught.")
         raise DontCloseSpider
@@ -52,12 +43,7 @@ class ScoreSpider(Spider):
             self.featuresoutput.write('\n')
 
         if self.disable_classifier or self.topicclassifier.classify_paragraphs(pc.paragraphs):
-            self.log("URL: %s classified as positive" % pc.base_url)
             for link in pc.links:
                 r = Request(url=link.url)
                 r.meta.update(link_text=link.text)
-                r.meta['score'] = 1 / float(len(link.url))
-                # self.log("Queueing url: %s (%s) score %f" % (link.url, link.text.strip(), r.meta['score']))
                 yield r
-        else:
-            self.log("URL: %s classified as negative" % pc.base_url)
