@@ -30,6 +30,10 @@ FRONTIER_SETTINGS = 'frontier.settings'
 SCHEDULER = 'crawlfrontier.contrib.scrapy.schedulers.frontier.CrawlFrontierScheduler'
 SPIDER_MIDDLEWARES.update({
     'crawlfrontier.contrib.scrapy.middlewares.seeds.file.FileSeedLoader': 1,
+    'scrapy.contrib.spidermiddleware.depth.DepthMiddleware': None,
+    'scrapy.contrib.spidermiddleware.offsite.OffsiteMiddleware': None,
+    'scrapy.contrib.spidermiddleware.referer.RefererMiddleware': None,
+    'scrapy.contrib.spidermiddleware.urllength.UrlLengthMiddleware': None
 })
 
 #SEEDS_SOURCE = 'seeds.txt'
