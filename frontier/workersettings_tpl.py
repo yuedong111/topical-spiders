@@ -5,7 +5,6 @@ MAX_REQUESTS = 0
 MAX_NEXT_REQUESTS = 4096
 CONSUMER_BATCH_SIZE = 1024
 NEW_BATCH_DELAY = 5.0
-JSONRPC_PORT=6014
 
 
 #--------------------------------------------------------
@@ -29,6 +28,10 @@ INCOMING_TOPIC = 'frontier-done'
 OUTGOING_TOPIC = 'frontier-todo'
 SCORING_GROUP = 'scrapy-scoring'
 SCORING_TOPIC = 'frontier-score'
+
+KAFKA_LOCATION_HH = '{kafka_location}:9092'
+FRONTERA_INCOMING_TOPIC = 'hh-incoming'
+FRONTERA_RESULTS_TOPIC = 'hh-results'
 
 #--------------------------------------------------------
 # Logging
