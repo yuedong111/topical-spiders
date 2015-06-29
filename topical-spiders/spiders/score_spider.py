@@ -3,6 +3,9 @@ from scrapy.http import Request
 from scrapy.exceptions import DontCloseSpider
 from scrapy import signals
 from fronteracrawler.classifier.content_processor import ContentProcessor
+from fronteracrawler.classifier.classifier import TopicClassifier
+from jsonrpc_service import TopicalSpiderWebService
+from fronteracrawler.worker.zookeeper import ZookeeperSession
 
 
 class ScoreSpider(Spider):
@@ -11,6 +14,20 @@ class ScoreSpider(Spider):
     def __init__(self, *args, **kwargs):
         super(ScoreSpider, self).__init__(*args, **kwargs)
         self.contentprocessor = ContentProcessor(skip_text=False)
+        self.job_config = {'disabled': True}
+        self.jsonrpc_server = TopicalSpiderWebService(self, self.settings)
+        self.zk = ZookeeperSession(self.settings.get('ZOOKEEPER_LOCATION'), name_prefix='spider')
+        self.jsonrpc_server.start_listening()
+        self.classifier = None
+
+    def set_process_info(self, process_info):
+        self.process_info = process_info
+        self.zk.set(process_info)
+
+    def configure(self, job_config):
+        self.job_config = job_config
+        self.classifier = TopicClassifier.from_keywords(job_config['included'], job_config['excluded']) \
+            if 'disabled' not in job_config else None
 
     # stable branch
     def set_crawler(self, crawler):
@@ -29,6 +46,8 @@ class ScoreSpider(Spider):
         pc = self.contentprocessor.process_response(response)
         if not pc:
             return
+        if self.classifier:
+            response.meta['p_score'] = self.classifier.score_paragraphs(pc.paragraphs)
         for link in pc.links:
             r = Request(url=link.url)
             r.meta.update(link_text=link.text)
