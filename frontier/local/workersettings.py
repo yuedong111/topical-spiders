@@ -33,6 +33,8 @@ KAFKA_LOCATION_HH = 'localhost:9092'
 FRONTERA_INCOMING_TOPIC = 'hh-incoming'
 FRONTERA_RESULTS_TOPIC = 'hh-results'
 
+ZOOKEEPER_LOCATION = 'localhost:2181'
+
 #--------------------------------------------------------
 # Logging
 #--------------------------------------------------------
