@@ -10,7 +10,7 @@ class ScoreSpider(Spider):
 
     def __init__(self, *args, **kwargs):
         super(ScoreSpider, self).__init__(*args, **kwargs)
-        self.contentprocessor = ContentProcessor(skip_text=True)
+        self.contentprocessor = ContentProcessor(skip_text=False)
 
     # stable branch
     def set_crawler(self, crawler):
@@ -27,6 +27,8 @@ class ScoreSpider(Spider):
 
     def parse(self, response):
         pc = self.contentprocessor.process_response(response)
+        if not pc:
+            return
         for link in pc.links:
             r = Request(url=link.url)
             r.meta.update(link_text=link.text)
