@@ -10,7 +10,7 @@ class ScoreSpider(Spider):
 
     def __init__(self, *args, **kwargs):
         super(ScoreSpider, self).__init__(*args, **kwargs)
-        self.contentprocessor = ContentProcessor()
+        self.contentprocessor = ContentProcessor(skip_text=True)
 
     # stable branch
     def set_crawler(self, crawler):
