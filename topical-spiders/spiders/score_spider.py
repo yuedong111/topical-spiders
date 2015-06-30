@@ -23,8 +23,8 @@ class ScoreSpider(Spider):
 
     def configure(self, job_config):
         self.job_config = job_config
-        self.classifier = TopicClassifier.from_keywords(job_config['included'], job_config['excluded']) \
-            if 'disabled' not in job_config else None
+        if 'disabled' not in job_config:
+            self.classifier = TopicClassifier.from_keywords(job_config['included'], job_config['excluded'])
 
     # stable branch
     def set_crawler(self, crawler):
@@ -49,6 +49,9 @@ class ScoreSpider(Spider):
             return
         if self.classifier:
             response.meta['p_score'] = self.classifier.score_paragraphs(pc.paragraphs)
+            response.meta['title'] = pc.title
+            response.meta['descr'] = pc.meta_description
+            response.meta['keywords'] = pc.meta_keywords
         for link in pc.links:
             r = Request(url=link.url)
             r.meta.update(link_text=link.text)
