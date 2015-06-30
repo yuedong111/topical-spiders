@@ -9,7 +9,7 @@ class TopicalSpiderResource(JsonRpcResource):
 
     def process_request(self, method, jrequest):
         if method == 'configure':
-            self.spider.configure(jrequest['job_config'])
+            self.spider.configure(jrequest['params'])
             return jsonrpc_result(jrequest['id'], "success")
         raise JsonRpcError(400, "Unknown method")
 
