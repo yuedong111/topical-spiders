@@ -15,9 +15,6 @@ class ScoreSpider(Spider):
         super(ScoreSpider, self).__init__(*args, **kwargs)
         self.contentprocessor = ContentProcessor(skip_text=False)
         self.job_config = {'disabled': True}
-        self.jsonrpc_server = TopicalSpiderWebService(self, self.settings)
-        self.zk = ZookeeperSession(self.settings.get('ZOOKEEPER_LOCATION'), name_prefix='spider')
-        self.jsonrpc_server.start_listening()
         self.classifier = None
 
     def set_process_info(self, process_info):
@@ -33,6 +30,10 @@ class ScoreSpider(Spider):
     def set_crawler(self, crawler):
         super(ScoreSpider, self).set_crawler(crawler)
         self.crawler.signals.connect(self.spider_idle, signal=signals.spider_idle)
+        self.zk = ZookeeperSession(self.settings.get('ZOOKEEPER_LOCATION'), name_prefix='spider')
+        self.jsonrpc_server = TopicalSpiderWebService(self, self.settings)
+        self.jsonrpc_server.start_listening()
+
 
     def spider_idle(self):
         self.log("Spider idle signal caught.")
