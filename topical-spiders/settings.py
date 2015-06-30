@@ -64,3 +64,5 @@ LOGSTATS_INTERVAL = 10
 #    }
 #JSONRPC_ENABLED = True
 #JSONRPC_LOGFILE = 'jsonrpc.log'
+
+ZOOKEEPER_LOCATION = 'localhost:2181'
