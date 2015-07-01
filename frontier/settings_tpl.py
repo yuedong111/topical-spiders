@@ -13,7 +13,7 @@ MIDDLEWARES.extend([
 # Crawl frontier backend
 #--------------------------------------------------------
 BACKEND = 'crawlfrontier.contrib.backends.remote.KafkaOverusedBackend'
-KAFKA_SERVER = '{kafka_location}:9092'
+KAFKA_LOCATION = '{kafka_location}:9092'
 
 #--------------------------------------------------------
 # Logging
