@@ -65,6 +65,4 @@ LOGSTATS_INTERVAL = 10
 #JSONRPC_ENABLED = True
 #JSONRPC_LOGFILE = 'jsonrpc.log'
 
-ZOOKEEPER_LOCATION = 'localhost:2181'
-from socket import getfqdn
-JSONRPC_HOST=getfqdn()
+from webservice_settings import *
